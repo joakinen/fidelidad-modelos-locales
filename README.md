@@ -33,6 +33,20 @@ medida va de 4,44 a 6,00 bits por peso. Para gemma4 e2b y e4b, Ollama activa
 decodificación especulativa. Las limitaciones del estudio se detallan en el
 artículo.
 
+## Niveles
+
+Agrupados por fidelidad, con cortes donde las puntuaciones dan un salto
+claro. Dentro de cada nivel no hay orden: con 14 preguntas, diferencias de
+uno o dos puntos no son significativas.
+
+| Nivel | Criterio | Configuraciones |
+|---|---|---|
+| A. Fiable | fidelidad ≥ 25 y total ≥ 107 | gemma4 e4b, gemma4 26B-a4b, gemma4 12B, gemma4 12B + razonamiento |
+| B. Fiable pero escueto | fidelidad alta (25,5), cobertura baja (21,5) | gemma4 e2b |
+| C. Utilizable con revisión | fidelidad 20-22 | qwen3 14B |
+| D. Atribuye mal | fidelidad 16-18 | qwen3.5 9B (con y sin razonamiento), qwen3 14B + razonamiento, gpt-oss 20B |
+| E. No apto | inventa contenido y casi no cita | salamandra 7B |
+
 ## Contenido
 
 | Ruta | Qué es |

@@ -278,6 +278,33 @@ ocupan gemma4 e4b y gemma4 26B-a4b.
 
 \section{Discusión}
 
+Para quien tenga que elegir modelo, agrupo las configuraciones en cinco
+niveles (Tabla~\ref{tab:niveles}). El criterio principal es la fidelidad,
+porque un error de atribución es el que más daño hace en una respuesta con
+citas, y la cobertura y las citas deciden solo los casos intermedios. Pongo
+los cortes donde las puntuaciones dan un salto claro, no donde difieren en
+uno o dos puntos, y dentro de cada nivel no ordeno: con 14 preguntas esas
+diferencias no son significativas.
+
+\begin{table}[h]
+  \caption{Niveles de fiabilidad para RAG con citas. Dentro de cada nivel,
+  las configuraciones van sin orden.}
+  \label{tab:niveles}
+  \centering
+  \small
+  \begin{tabular}{p{3.2cm}p{4.6cm}p{5.6cm}}
+    \toprule
+    Nivel & Criterio & Configuraciones \\
+    \midrule
+    A. Fiable & fidelidad $\ge$ 25 y total $\ge$ 107 & gemma4 e4b, gemma4 26B-a4b, gemma4 12B, gemma4 12B + raz. \\
+    B. Fiable pero escueto & fidelidad alta (25,5), cobertura baja (21,5) & gemma4 e2b \\
+    C. Utilizable con revisión & fidelidad 20--22 & qwen3 14B \\
+    D. Atribuye mal & fidelidad 16--18 & qwen3.5 9B, qwen3.5 9B + raz., qwen3 14B + raz., gpt-oss 20B \\
+    E. No apto & inventa contenido y casi no cita & salamandra 7B \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 \paragraph{gemma4 e4b es el modelo más pequeño que supera la prueba.} Es la
 única configuración con fidelidad perfecta (28/28), empata con gemma4 12B en
 el total y genera casi tres veces más rápido con menos memoria. e2b, un
