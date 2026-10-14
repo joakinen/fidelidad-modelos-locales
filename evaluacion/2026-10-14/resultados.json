@@ -1,0 +1,71 @@
+{
+ "resumen": {
+  "gemma4:e2b-it-q4_K_M": {
+   "tok_s": 106.1,
+   "segundos_media": 3.5,
+   "tokens_media": 167,
+   "memoria_gb": "≤4.6*"
+  },
+  "gemma4:e4b-it-q4_K_M": {
+   "tok_s": 70.0,
+   "segundos_media": 6.3,
+   "tokens_media": 179,
+   "memoria_gb": "≤6.6*"
+  },
+  "gemma4:12b": {
+   "tok_s": 25.2,
+   "segundos_media": 16.5,
+   "tokens_media": 169,
+   "memoria_gb": 8.1
+  },
+  "gemma4:12b@si": {
+   "tok_s": 24.7,
+   "segundos_media": 62.5,
+   "tokens_media": 1304,
+   "memoria_gb": 8.1
+  },
+  "gemma4-26b-64k": {
+   "tok_s": 53.7,
+   "segundos_media": 7.6,
+   "tokens_media": 207,
+   "memoria_gb": 17.3
+  },
+  "qwen3.5:9b": {
+   "tok_s": 37.7,
+   "segundos_media": 12.1,
+   "tokens_media": 224,
+   "memoria_gb": 5.7
+  },
+  "qwen3.5:9b@si": {
+   "tok_s": 37.2,
+   "segundos_media": 104.5,
+   "tokens_media": 3656,
+   "memoria_gb": 5.7
+  },
+  "qwen3:14B": {
+   "tok_s": 23.5,
+   "segundos_media": 20.0,
+   "tokens_media": 194,
+   "memoria_gb": 10.3
+  },
+  "qwen3:14B@si": {
+   "tok_s": 23.4,
+   "segundos_media": 34.5,
+   "tokens_media": 535,
+   "memoria_gb": 9.7
+  },
+  "hf.co/unsloth/gpt-oss-20b-GGUF:Q4_K_M@medium": {
+   "tok_s": 61.6,
+   "segundos_media": 15.8,
+   "tokens_media": 784,
+   "memoria_gb": 11.8
+  },
+  "hf.co/RichardErkhov/BSC-LT_-_salamandra-7b-instruct-gguf:Q4_K_M": {
+   "tok_s": 46.0,
+   "segundos_media": 7.2,
+   "tokens_media": 109,
+   "memoria_gb": 5.0
+  }
+ },
+ "nota": "reconstruido de la salida de comparar_modelos.py (ejecución 2026-10-14, Ollama 0.40.4); memoria con contexto 8K según ollama ps; * tamaño en disco, Ollama 0.40.4 informa 0,5 GB para gemma4 e2b/e4b"
+}

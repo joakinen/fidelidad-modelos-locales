@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.env
+indice/
+paginas/
+salida/
+consultas.jsonl
+articulo/*.aux
+articulo/*.log
+articulo/*.out
+preguntas.json
