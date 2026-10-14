@@ -6,7 +6,8 @@ en RAG con citas: once configuraciones en un ordenador de 24 GB»**
 ([Creative Codeworks](https://creativecodeworks.com)).
 
 Once configuraciones de modelos locales (Ollama 0.40.4, Mac mini M4 Pro de
-24 GB) responden 14 preguntas en español sobre una wiki temática. Todas
+24 GB) responden 14 preguntas en español sobre la wiki de investigación
+filosófica [filosofias.es](https://www.filosofias.es). Todas
 reciben los mismos fragmentos recuperados, y dos evaluadores ciegos puntúan
 cada respuesta en fidelidad, citas, cobertura y contención (decir lo que los
 fragmentos no cubren sin rellenarlo con conocimiento propio).
@@ -40,7 +41,7 @@ artículo.
 | `servicio.py`, `firma.py`, `config.py` | Recuperación y montaje del prompt; servicio HTTP con firma HMAC |
 | `comparar_modelos.py` | Pasa las mismas preguntas y fragmentos a cada configuración y genera lotes ciegos |
 | `agregar_evaluacion.py` | Junta las puntuaciones con las claves y calcula el acuerdo entre evaluadores |
-| `evaluacion/2026-10-14/` | Claves de etiquetado, puntuaciones (0-2 por criterio) de los cuatro evaluadores y métricas |
+| `evaluacion/2026-10-14/` | Preguntas, claves de etiquetado, puntuaciones (0-2 por criterio) de los cuatro evaluadores y métricas |
 | `articulo/` | Fuente LaTeX, figura y PDF del artículo |
 
 ## Reproducir
@@ -52,7 +53,7 @@ con `bge-m3` y los modelos que quieras comparar, y un directorio de páginas
 ```sh
 uv sync
 DIR_PAGINAS=/ruta/a/data/pages uv run python indexar.py
-cp preguntas.ejemplo.json preguntas.json   # y escribir las preguntas propias
+cp preguntas.ejemplo.json preguntas.json   # o evaluacion/2026-10-14/preguntas.json
 NOMBRE_CORPUS="Mi wiki" TEMA_CORPUS="historia" \
   uv run python comparar_modelos.py salida/ gemma4:e4b-it-q4_K_M gemma4:12b qwen3:14B@si
 # puntuar salida/ciego_*.json (evaluadores humanos o automáticos) en
@@ -63,11 +64,14 @@ uv run python agregar_evaluacion.py salida/
 `modelo@si` activa el razonamiento; `modelo@low|medium|high` fija el nivel
 en gpt-oss.
 
-**Qué no se incluye.** El corpus, las preguntas y los textos completos de
-las respuestas identifican la wiki y contienen páginas de acceso
-restringido, así que no se publican; en el artículo y en el código aparecen
-como marcadores entre corchetes. Las puntuaciones van sin las frases que los
-evaluadores señalaron como no respaldadas, por el mismo motivo.
+En el código, el nombre y el tema del corpus (`NOMBRE_CORPUS`,
+`TEMA_CORPUS`), la ruta de las páginas y las preguntas son parámetros, para
+usarlo con cualquier wiki DokuWiki. Las 14 preguntas del estudio están en
+`evaluacion/2026-10-14/preguntas.json`.
+
+**Qué no se incluye.** Las respuestas completas, porque reproducen páginas
+de la wiki de acceso restringido. Por el mismo motivo, las puntuaciones van
+sin las frases que los evaluadores señalaron como no respaldadas.
 
 ## Licencia
 

@@ -25,9 +25,6 @@
 {\centerline{\large \bfseries \scshape Resumen}\begin{quote}}
 {\end{quote}}
 
-% Datos del corpus sustituidos por marcadores
-\newcommand{\ph}[1]{\textcolor{blue!55!black}{[#1]}}
-
 \newcommand{\REPO}{https://github.com/joakinen/fidelidad-modelos-locales}
 
 \title{Fidelidad a las fuentes de modelos locales\\
@@ -49,7 +46,7 @@ en un ordenador de 24\,GB}
 Comparo once configuraciones de modelos de lenguaje ejecutados en local
 (Ollama 0.40.4 en un Mac mini M4 Pro con 24\,GB) en una tarea de generación
 aumentada por recuperación (RAG) con citas, en español, sobre
-\ph{nombre de la wiki}, una wiki de \ph{tema} con \ph{N} páginas. Para cada
+la wiki de investigación filosófica filosofias.es, de 614 páginas. Para cada
 una de 14 preguntas, todos los modelos reciben los mismos ocho fragmentos y
 la instrucción de responder solo con ellos, citar y declarar lo que falta.
 Tres preguntas tratan de autores que no aparecen en el corpus. Dos
@@ -99,9 +96,10 @@ la elección de un modelo local para un corpus concreto.
 
 \subsection{Corpus y recuperación}
 
-El corpus es \ph{nombre de la wiki} (\ph{URL}), una wiki DokuWiki sobre
-\ph{tema}. Tras excluir las páginas técnicas y de prueba quedan \ph{N}
-páginas, troceadas por secciones en \ph{M} fragmentos de hasta 1\,500
+El corpus es la wiki de filosofias.es (\url{https://www.filosofias.es}),
+una DokuWiki de investigación filosófica en español. Tras excluir las
+páginas técnicas y de prueba quedan 614 páginas, troceadas por secciones en
+6\,734 fragmentos de hasta 1\,500
 caracteres. Represento los fragmentos con los \emph{embeddings} de bge-m3
 \citep{chen2024m3} y, para cada pregunta, selecciono los ocho más similares
 (tres como máximo por página). La recuperación se calcula una sola vez y
@@ -307,8 +305,10 @@ no lo respaldan.
 
 \paragraph{El error más frecuente es la atribución cruzada.} Los cuatro
 evaluadores señalaron por separado los mismos patrones. El más repetido es
-asignar a un autor lo que el fragmento dice de otro (por ejemplo, atribuir a
-\ph{autor A} lo que el fragmento dice de \ph{autor B}). Le siguen mezclar
+asignar a un autor lo que el fragmento dice de otro: varias respuestas
+atribuyen a Simondon lo que el fragmento cuenta del libro de Yuk Hui sobre
+los objetos digitales, y otras dan a Feyerabend argumentos que el corpus
+atribuye a Lakatos y a Hanson. Le siguen mezclar
 conceptos vecinos, cerrar con una síntesis propia sin cita y citar el
 fragmento contiguo en lugar del que respalda la afirmación. qwen3.5 9B
 muestra bien el perfil, con la segunda mejor cobertura (27,5) y una de las
@@ -317,16 +317,16 @@ fidelidades más bajas (16).
 \paragraph{Ante autores ausentes, casi todos se abstienen.} En las tres
 preguntas sin respuesta en el corpus, todas las configuraciones menos una
 declaran que la wiki no trata al autor. Alguna cuela un dato menor de
-conocimiento propio, como \ph{calificativo del autor ausente}. salamandra
-7B es la excepción: atribuye a \ph{autor ausente 1} una obra que no existe
-(\ph{título inventado}) y expone una doctrina de \ph{autor ausente 3} que
-los fragmentos no contienen. Además casi nunca cita (2 sobre 28).
+conocimiento propio, como llamar «neoplatónico» a Plotino o «filósofa
+francesa» a Simone Weil. salamandra 7B es la excepción: atribuye a Simone
+Weil una obra que no existe («La pesadilla y el ser») y expone una doctrina
+del alma de Avicena que los fragmentos no contienen. Además casi nunca cita (2 sobre 28).
 
 \section{Limitaciones}
 
 \begin{itemize}\setlength{\itemsep}{1pt}\setlength{\parskip}{0pt}
-  \item \textbf{Tarea única.} RAG con citas, en español, sobre un corpus de
-  \ph{tema}. Los resultados no se pueden trasladar a la generación de SQL,
+  \item \textbf{Tarea única.} RAG con citas, en español, sobre un corpus
+  filosófico. Los resultados no se pueden trasladar a la generación de SQL,
   al resumen libre ni a otros idiomas, donde el orden de los modelos puede
   cambiar.
   \item \textbf{Muestra pequeña.} Catorce preguntas y una ejecución por
@@ -367,9 +367,9 @@ de las clasificaciones generales.
 El código de indexado, recuperación, generación
 (\texttt{comparar\_modelos.py}) y agregación
 (\texttt{agregar\_evaluacion.py}), las claves de etiquetado, las
-puntuaciones de los cuatro evaluadores y las métricas están en
-\url{\REPO}. El corpus, las preguntas y los textos completos de las
-respuestas no se publican porque contienen páginas de acceso restringido.
+puntuaciones de los cuatro evaluadores, las preguntas y las métricas están
+en \url{\REPO}. Las respuestas completas no se publican porque reproducen
+páginas de la wiki de acceso restringido.
 Los ficheros de resultados se reconstruyeron después de que un error
 borrara la carpeta de trabajo, ya terminada la evaluación. Las puntuaciones
 salen de volver a ejecutar los scripts de los evaluadores y coinciden byte a
@@ -470,8 +470,8 @@ and acceleration.
 \label{ap:prompt}
 
 \begin{quote}\small\itshape
-Eres el asistente de consulta de la wiki \ph{nombre de la wiki}, una wiki de
-\ph{tema} en español. Respondes a la pregunta usando SOLO los fragmentos de
+Eres el asistente de consulta de la wiki filosofias.es, una wiki de
+investigación filosófica en español. Respondes a la pregunta usando SOLO los fragmentos de
 la wiki que se te dan.\\[0.5em]
 Reglas:\\
 - Responde en español, con precisión y sin relleno. Entre uno y cuatro
@@ -491,17 +491,25 @@ de «título de página > sección», y a continuación la pregunta.
 \section{Preguntas}
 \label{ap:preguntas}
 
-Las preguntas siguen tres patrones. Las concretas no se publican porque
-identifican el corpus.
+Las preguntas 1 a 10 tienen respuesta en el corpus. La 11 trata de un
+autor que aparece solo de pasada, y las 12 a 14, de autores que no aparecen
+en ninguna página.
 
 \begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
-  \item[1--10.] Qué dice el corpus sobre un concepto, un autor o la relación
-  entre dos autores, siempre con respuesta en los fragmentos. Por ejemplo:
-  «¿En qué se diferencian \ph{autor A} y \ph{autor B} según la wiki?».
-  \item[11.] «¿Qué dice la wiki sobre \ph{tema} de \ph{autor tratado de
-  pasada}?», un autor que el corpus menciona en pocas páginas.
-  \item[12--14.] «¿Qué dice la wiki sobre \ph{tema} de \ph{autor ausente}?»,
-  con tres autores que no aparecen en ninguna página.
+  \item ¿Qué es la cosmotécnica según Yuk Hui?
+  \item ¿Qué relación hay entre información y cultura en la info-computación?
+  \item ¿En qué se diferencian Rorty y Foucault según la wiki?
+  \item ¿Qué son los hiperobjetos de Timothy Morton?
+  \item ¿Qué plantea el programa fuerte de la sociología del conocimiento?
+  \item ¿Qué crítica se hace a Byung-Chul Han desde la ontología orientada a objetos?
+  \item ¿Qué aporta Simondon a la filosofía de la técnica?
+  \item ¿Qué dice la wiki sobre la causalidad en los sistemas complejos?
+  \item ¿Qué dice la wiki sobre Latour y la teoría del actor-red?
+  \item ¿Qué relación establece la wiki entre Kuhn y Feyerabend?
+  \item ¿Qué dice la wiki sobre la ética de Levinas?
+  \item ¿Qué dice la wiki sobre la mística de Simone Weil?
+  \item ¿Qué pensaba Plotino sobre el Uno según la wiki?
+  \item ¿Qué opinaba Avicena sobre el alma según la wiki?
 \end{enumerate}
 
 \end{document}

@@ -8,4 +8,4 @@ consultas.jsonl
 articulo/*.aux
 articulo/*.log
 articulo/*.out
-preguntas.json
+/preguntas.json
